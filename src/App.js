@@ -1,7 +1,12 @@
+import React, { useState } from 'react';
+
 import './App.css';
 import styled from 'styled-components';
+import GlobalStyle from './GlobalStyle';
 
+import Intro from './Parts/Intro';
 import Scenario from './Parts/Scenario';
+import Outro from './Parts/Outro';
 
 const StyledAppContainer = styled.div`
   display: flex;
@@ -9,16 +14,20 @@ const StyledAppContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-image: url(${props => `${process.env.PUBLIC_URL}/assets/images/fond_scenario.png`});
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
 `;
 
 function App() {
+
+  const [step, setStep] = useState(0);
+  const [endId, setEndId] = useState("");
+
   return (
     <StyledAppContainer className="App">
-      <Scenario card_id={1} />
+      <GlobalStyle />
+      {step === 0 && <Intro setStep={setStep} />}
+      {step === 1 && <Scenario setStep={setStep} setEndId={setEndId}/>}
+      {step === 2 && <Outro setStep={setStep} endId={endId} />}
+
     </StyledAppContainer>
   );
 }
